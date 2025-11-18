@@ -72,7 +72,7 @@ void Keeper::clear() {
 
 void Keeper::saveToFile(const std::string& filename) const {
     std::ofstream out(filename.c_str());
-    if (!out) throw FactoryException(std::string("Cannot open file for writing: ") + filename);
+    if (!out) throw FactoryException(std::string("Невозможно открыть файл для чтения: ") + filename);
     out << size << '\n';
     for (int i = 0; i < size; ++i) {
         items[i]->save(out);
