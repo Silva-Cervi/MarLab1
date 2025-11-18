@@ -7,7 +7,7 @@
 
 Keeper::Keeper() : items(nullptr), size(0), capacity(0) {
     resize(4);
-    std::cout << "Keeper: default constructor\n";
+    std::cout << "Keeper: конструктор по умолчанию\n";
 }
 
 void Keeper::resize(int newCap) {
@@ -26,7 +26,7 @@ Keeper::Keeper(const Keeper& other) : items(nullptr), size(0), capacity(0) {
         items[i] = other.items[i]->clone();
     }
     size = other.size;
-    std::cout << "Keeper: copy constructor\n";
+    std::cout << "Keeper: конструктор копирования\n";
 }
 
 Keeper& Keeper::operator=(const Keeper& other) {
@@ -35,31 +35,31 @@ Keeper& Keeper::operator=(const Keeper& other) {
     resize(other.capacity);
     for (int i = 0; i < other.size; ++i) items[i] = other.items[i]->clone();
     size = other.size;
-    std::cout << "Keeper: assignment operator\n";
+    std::cout << "Keeper: оператор присваивания\n";
     return *this;
 }
 
 Keeper::~Keeper() {
     clear();
     delete[] items;
-    std::cout << "Keeper: destructor\n";
+    std::cout << "Keeper: деструктор\n";
 }
 
 void Keeper::add(Base* obj) {
-    if (!obj) throw FactoryException("Attempt to add null object");
+    if (!obj) throw FactoryException("Попытка добавить нулевой указатель");
     if (size >= capacity) resize(capacity * 2);
     items[size++] = obj;
 }
 
 void Keeper::removeAt(int index) {
-    if (index < 0 || index >= size) throw FactoryException("Index out of range");
+    if (index < 0 || index >= size) throw FactoryException("Индекс вне диапазона");
     delete items[index];
     for (int i = index; i < size - 1; ++i) items[i] = items[i + 1];
     items[--size] = nullptr;
 }
 
 Base* Keeper::getAt(int index) const {
-    if (index < 0 || index >= size) throw FactoryException("Index out of range");
+    if (index < 0 || index >= size) throw FactoryException("Индекс вне диапазона");
     return items[index];
 }
 
@@ -72,17 +72,18 @@ void Keeper::clear() {
 
 void Keeper::saveToFile(const std::string& filename) const {
     std::ofstream out(filename.c_str());
-    if (!out) throw FactoryException(std::string("Невозможно открыть файл для чтения: ") + filename);
+    if (!out) throw FactoryException(std::string("Не удалось открыть файл для записи: ") + filename);
     out << size << '\n';
     for (int i = 0; i < size; ++i) {
         items[i]->save(out);
     }
     out.close();
+    std::cout << "Данные сохранены в файл: " << filename << '\n';
 }
 
 void Keeper::loadFromFile(const std::string& filename) {
     std::ifstream in(filename.c_str());
-    if (!in) throw FactoryException(std::string("Cannot open file for reading: ") + filename);
+    if (!in) throw FactoryException(std::string("Не удалось открыть файл для чтения: ") + filename);
     clear();
     int n = 0;
     in >> n;
@@ -91,7 +92,7 @@ void Keeper::loadFromFile(const std::string& filename) {
     resize(n > 4 ? n : 4);
     for (int i = 0; i < n; ++i) {
         std::string type;
-        if (!std::getline(in, type)) throw FactoryException("Unexpected EOF while reading object type");
+        if (!std::getline(in, type)) throw FactoryException("Неожиданный конец файла при чтении типа объекта");
         if (type == "FURNITURE") {
             std::string f_type; std::getline(in, f_type);
             double h, w, d; in >> h >> w >> d; std::getline(in, dummy);
@@ -118,8 +119,9 @@ void Keeper::loadFromFile(const std::string& filename) {
             add(m);
         }
         else {
-            throw FactoryException(std::string("Unknown object type in file: ") + type);
+            throw FactoryException(std::string("Неизвестный тип объекта в файле: ") + type);
         }
     }
     in.close();
+    std::cout << "Данные загружены из файла: " << filename << '\n';
 }

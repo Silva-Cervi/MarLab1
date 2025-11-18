@@ -13,7 +13,7 @@ public:
 
     virtual void print() const = 0;
     virtual void save(std::ofstream& out) const = 0;
-    // при загрузке статический фабричный метод в Keeper создаёт объект
+    // при загрузке Keeper создаёт объект
     virtual Base* clone() const = 0;
     virtual std::string type() const = 0;
 };

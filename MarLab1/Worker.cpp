@@ -1,30 +1,30 @@
 #include "Worker.h"
 #include <iostream>
 
-Worker::Worker() : fio("unknown"), position("none"), salary(0), address(""), phone("") {
-    std::cout << "Worker: default constructor\n";
+Worker::Worker() : fio("неизвестно"), position("нет"), salary(0), address(""), phone("") {
+    std::cout << "Worker: конструктор по умолчанию\n";
 }
 
 Worker::Worker(const std::string& fio_, const std::string& pos, double sal, const std::string& addr, const std::string& phone_)
     : fio(fio_), position(pos), salary(sal), address(addr), phone(phone_) {
-    std::cout << "Worker: parameter constructor\n";
+    std::cout << "Worker: параметрический конструктор\n";
 }
 
 Worker::Worker(const Worker& other)
     : fio(other.fio), position(other.position), salary(other.salary), address(other.address), phone(other.phone) {
-    std::cout << "Worker: copy constructor\n";
+    std::cout << "Worker: конструктор копировани€\n";
 }
 
 Worker::~Worker() {
-    std::cout << "Worker: destructor\n";
+    std::cout << "Worker: деструктор\n";
 }
 
 void Worker::setFIO(const std::string& s) { fio = s; }
 std::string Worker::getFIO() const { return fio; }
 
 void Worker::print() const {
-    std::cout << "[Worker] " << fio << ", position=" << position << ", salary=" << salary
-        << ", address=" << address << ", phone=" << phone << "\n";
+    std::cout << "[–аботник] " << fio << ", должность=" << position << ", зарплата=" << salary
+        << ", адрес=" << address << ", телефон=" << phone << "\n";
 }
 
 void Worker::save(std::ofstream& out) const {

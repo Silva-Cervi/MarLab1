@@ -1,29 +1,29 @@
 #include "Machine.h"
 #include <iostream>
 
-Machine::Machine() : make("unknown"), model("unknown"), reg_number("") {
-    std::cout << "Machine: default constructor\n";
+Machine::Machine() : make("неизвестно"), model("неизвестно"), reg_number("") {
+    std::cout << "Machine: конструктор по умолчанию\n";
 }
 
 Machine::Machine(const std::string& make_, const std::string& model_, const std::string& reg)
     : make(make_), model(model_), reg_number(reg) {
-    std::cout << "Machine: parameter constructor\n";
+    std::cout << "Machine: параметрический конструктор\n";
 }
 
 Machine::Machine(const Machine& other)
     : make(other.make), model(other.model), reg_number(other.reg_number) {
-    std::cout << "Machine: copy constructor\n";
+    std::cout << "Machine: конструктор копирования\n";
 }
 
 Machine::~Machine() {
-    std::cout << "Machine: destructor\n";
+    std::cout << "Machine: деструктор\n";
 }
 
 void Machine::setMake(const std::string& m) { make = m; }
 std::string Machine::getMake() const { return make; }
 
 void Machine::print() const {
-    std::cout << "[Machine] " << make << " " << model << ", reg=" << reg_number << "\n";
+    std::cout << "[Машина] " << make << " " << model << ", гос.№=" << reg_number << "\n";
 }
 
 void Machine::save(std::ofstream& out) const {

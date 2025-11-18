@@ -1,2 +1,8 @@
-﻿  Main.cpp
+﻿  Base.cpp
+  Furniture.cpp
+  Keeper.cpp
+  Machine.cpp
+  Main.cpp
+  Worker.cpp
+  Создание кода...
   MarLab1.vcxproj -> C:\Users\ilyag\source\repos\MarLab1\x64\Debug\MarLab1.exe
